@@ -1,0 +1,35 @@
+{
+  "name": "vue-koa2-login",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node bin/www",
+    "dev": "./node_modules/.bin/nodemon bin/www",
+    "prd": "pm2 start bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .js src --fix"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "debug": "^2.6.3",
+    "jsonwebtoken": "^8.2.0",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^2.0.1",
+    "koa-onerror": "^1.2.1",
+    "koa-router": "^7.1.1",
+    "koa-static": "^3.0.0",
+    "sequelize": "^4.36.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "nodemon": "^1.8.1"
+  }
+}
