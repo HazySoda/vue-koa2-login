@@ -10,6 +10,9 @@ const router = require('./router')
 // error handler
 onerror(app)
 
+// init database
+require('./init/db')
+
 // middlewares
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
