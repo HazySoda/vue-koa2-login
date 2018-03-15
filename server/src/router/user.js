@@ -4,8 +4,8 @@ const auth = require('../middlewares/auth')
 
 router.prefix('/user')
 
-router.get('/login', auth, userController.login)
+router.post('/login', auth, userController.login)
 
-router.get('/reg', userController.reg)
+router.post('/reg', userController.reg)
 
 module.exports = router
