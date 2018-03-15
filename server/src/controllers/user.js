@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const { regexs } = require('../util')
 const config = require('../config/index')
 const UserModel = require('../init/db').User
+const { Op } = require('sequelize')
 
 // 校验请求参数
 const validate = params => {
@@ -91,14 +92,21 @@ module.exports = {
       // 判断手机号码是否已经注册
       const user = await UserModel.findOne({
         where: {
-          phone
+          [Op.or]: [{phone}, {nickname}]
         }
       })
-      if (user) {
-        ctx.status = 400
+      if (user && (user.phone === phone)) {
+        ctx.status = 200
         ctx.body = {
-          code: 400,
+          code: -1,
           message: '该手机号码已被注册'
+        }
+        return
+      } else if (user && (user.nickname === nickname)) {
+        ctx.status = 200
+        ctx.body = {
+          code: -2,
+          message: '该昵称已被注册'
         }
         return
       }
@@ -114,7 +122,7 @@ module.exports = {
       await UserModel.create(data)
       ctx.status = 200
       ctx.body = {
-        code: 200,
+        code: 0,
         message: '注册成功',
         data
       }
