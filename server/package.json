@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js src --fix"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.1",
     "bcrypt": "^1.0.3",
     "debug": "^2.6.3",
     "jsonwebtoken": "^8.2.0",
