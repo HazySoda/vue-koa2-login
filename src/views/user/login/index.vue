@@ -36,6 +36,7 @@ export default {
       try {
         const res = await api.login(data)
         localStorage.token = res.data.token
+        this.$router.push('/')
       } catch (err) {
         console.log(err)
       }
