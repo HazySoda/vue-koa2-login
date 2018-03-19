@@ -1,32 +1,43 @@
 import axios from 'axios'
+import router from '@/router'
 
 // global config
-const baseURL = 'http://127.0.0.1:3000'
-const token = localStorage.token || ''
-
-// create an new axios instance
-const _axios = axios.create({
-  baseURL,
+const config = {
+  baseURL: 'http://127.0.0.1:3000',
   headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
+    'Content-Type': 'application/json'
   },
   timeout: 60000
-})
+}
+
+// create an new axios instance
+const _axios = axios.create(config)
 
 // interceptors
-const resResolve = res => {
-  return res
-}
-
-const resReject = err => {
-  if (err.response.status === 401) {
-    window.location.href = '/'
+const handlers = {
+  reqResolve (conf) {
+    const token = localStorage.token || ''
+    conf.headers.Authorization = `Bearer ${token}`
+    return conf
+  },
+  reqReject (err) {
+    return Promise.reject(err)
+  },
+  resResolve (res) {
+    return res
+  },
+  resReject (err) {
+    if (err.response.status === 401) {
+      localStorage.token = ''
+      router.replace({
+        path: '/user/login'
+      })
+    }
+    return Promise.reject(err)
   }
-  return Promise.reject(err)
 }
-
-_axios.interceptors.response.use(resResolve, resReject)
+_axios.interceptors.request.use(handlers.reqResolve, handlers.reqReject)
+_axios.interceptors.response.use(handlers.resResolve, handlers.resReject)
 
 // export
 export default {
