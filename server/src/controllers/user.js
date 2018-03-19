@@ -143,5 +143,37 @@ module.exports = {
         message: e.message
       }
     }
+  },
+  getStatus (ctx, next) {
+    // 获取 token
+    let token
+    const authorization = ctx.get('Authorization')
+    if (authorization) {
+      token = authorization.split(' ')[1]
+    } else {
+      ctx.status = 400
+      ctx.body = {
+        code: 400,
+        message: '获取Token失败'
+      }
+    }
+    try {
+      // 解密token
+      const decoded = jwt.decode(token)
+      // 返回状态和过期时间
+      ctx.status = 200
+      ctx.body = {
+        code: 200,
+        message: '登录成功',
+        expireTime: decoded.exp * 1000
+      }
+    } catch (e) {
+      console.log(e)
+      ctx.status = 500
+      ctx.body = {
+        code: 500,
+        message: e.message
+      }
+    }
   }
 }
