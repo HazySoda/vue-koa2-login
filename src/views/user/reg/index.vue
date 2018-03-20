@@ -40,7 +40,9 @@ export default {
       }
       try {
         const res = await api.reg(data)
-        console.log(res.data)
+        // 注册成功后存储 token 并跳转到验证页
+        localStorage.token = res.data.token
+        this.$router.replace('/')
       } catch (err) {
         console.log(err)
       }
