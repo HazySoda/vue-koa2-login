@@ -19,5 +19,12 @@
     .el-form {
       margin-top: 15px;
     }
+    .el-button {
+      display: block;
+      width: 100%;
+      & + .el-button {
+        margin: 10px 0 0;
+      }
+    }
   }
 }

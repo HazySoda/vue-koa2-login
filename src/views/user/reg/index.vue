@@ -13,8 +13,8 @@
           <el-input v-model="regForm.nickname" type="text" size="medium" autofocus clearable auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
-      <el-button type="primary" @click="submit">注册</el-button>
-      <el-button>登录</el-button>
+      <el-button type="primary" @click="submit">立即注册</el-button>
+      <el-button @click="goLogin">登录已有账号</el-button>
     </div>
   </div>
 </template>
@@ -33,6 +33,7 @@ export default {
     }
   },
   methods: {
+    // 提交注册表单
     async submit () {
       const data = {
         ...this.regForm
@@ -43,6 +44,9 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    goLogin () {
+      this.$router.push('/user/login')
     }
   }
 }
