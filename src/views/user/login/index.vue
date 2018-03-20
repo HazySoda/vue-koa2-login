@@ -11,7 +11,7 @@
         </el-form-item>
       </el-form>
       <el-button type="primary" @click="submit">登录</el-button>
-      <el-button>注册</el-button>
+      <el-button @click="goReg">注册新账号</el-button>
     </div>
   </div>
 </template>
@@ -29,6 +29,7 @@ export default {
     }
   },
   methods: {
+    // 提交登录表单
     async submit () {
       const data = {
         ...this.loginForm
@@ -36,10 +37,15 @@ export default {
       try {
         const res = await api.login(data)
         localStorage.token = res.data.token
-        this.$router.push('/')
+        // 此处使用 replace，防止用户登陆成功后点击后退按钮重复登录
+        this.$router.replace('/')
       } catch (err) {
         console.log(err)
       }
+    },
+    // 跳转到注册页面
+    goReg () {
+      this.$router.push('/user/reg')
     }
   }
 }
