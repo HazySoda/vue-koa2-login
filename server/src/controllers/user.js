@@ -128,12 +128,18 @@ module.exports = {
         nickname
       }
       // 存入数据库
-      await UserModel.create(data)
+      const newUser = await UserModel.create(data)
+      const payload = {
+        uid: newUser.id,
+        phone: newUser.phone
+      }
+      // 签发 token 并返回给客户端，以实现注册成功后自动登录
+      const token = jwt.sign(payload, config.jwt.secret, config.jwt.options)
       ctx.status = 200
       ctx.body = {
         code: 0,
         message: '注册成功',
-        data
+        token
       }
     } catch (e) {
       console.log(e)
