@@ -169,7 +169,7 @@ module.exports = {
       // 返回状态和过期时间
       ctx.status = 200
       ctx.body = {
-        code: 200,
+        code: 0,
         message: '登录成功',
         expireTime: decoded.exp * 1000
       }
