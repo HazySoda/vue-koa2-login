@@ -49,9 +49,24 @@ export default {
           const data = {...this.loginForm}
           try {
             const res = await api.login(data)
+            if (res.data.code !== 0) {
+              this.$message({
+                type: 'error',
+                message: res.data.message,
+                duration: 1000
+              })
+              return
+            }
             localStorage.token = res.data.token
-            // 此处使用 replace，防止用户登陆成功后点击后退按钮重复登录
-            this.$router.replace('/')
+            window.setTimeout(() => {
+              // 此处使用 replace，防止用户登陆成功后点击后退按钮重复登录
+              this.$router.replace('/')
+            }, 1000)
+            this.$message({
+              type: 'success',
+              message: '登录成功！',
+              duration: 1000
+            })
           } catch (err) {
             console.log(err)
           }
