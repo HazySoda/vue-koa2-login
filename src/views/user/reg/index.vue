@@ -59,9 +59,24 @@ export default {
           }
           try {
             const res = await api.reg(data)
+            if (res.data.code !== 0) {
+              this.$message({
+                type: 'error',
+                message: res.data.message,
+                duration: 1000
+              })
+              return
+            }
             // 注册成功后存储 token 并跳转到验证页
             localStorage.token = res.data.token
-            this.$router.replace('/')
+            window.setTimeout(() => {
+              this.$router.replace('/')
+            }, 1000)
+            this.$message({
+              type: 'success',
+              message: '注册成功！',
+              duration: 1000
+            })
           } catch (err) {
             console.log(err)
           }
