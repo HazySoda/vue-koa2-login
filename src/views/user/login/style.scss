@@ -7,23 +7,23 @@
     padding: 20px;
     border-radius: 6px;
     background: #fff;
-    width: 300px;
+    width: 360px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
     h1 {
       font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
     }
-    .el-form {
-      margin-top: 15px;
-    }
-    .el-button {
-      display: block !important;
-      width: 100%;
-      & + .el-button {
-        margin: 10px 0 0;
+    .login-form__actions {
+      .el-button {
+        display: block;
+        width: 100%;
+        & + .el-button {
+          margin: 10px 0 0;
+        }
       }
     }
   }
