@@ -43,7 +43,7 @@ export default {
           {pattern: regexs.password, message: '请输入6-18位字母数字组合 (第一位必须为字母)'}
         ],
         nickname: [
-          {required: true, message: '请输入手机号码'},
+          {required: true, message: '请输入昵称'},
           {pattern: regexs.nickname, message: '请输入2-10位的中英文组合 (不允许特殊符号)'}
         ]
       }
