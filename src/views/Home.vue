@@ -8,30 +8,15 @@
 </template>
 
 <script>
-import * as api from '@/api/user'
-import { getDateTime } from '@/util'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  data () {
-    return {
-      userStatus: null
-    }
+  computed: {
+    ...mapState('user', ['userStatus']),
+    ...mapActions('user', ['getUserStatus'])
   },
-  methods: {
-    async getUserStatus () {
-      try {
-        const res = await api.getUserStatus()
-        this.userStatus = {
-          message: res.data.message,
-          expireTime: getDateTime(res.data.expireTime)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  },
-  mounted () {
-    this.getUserStatus()
+  created () {
+    this.$store.dispatch('user/getUserStatus')
   }
 }
 </script>

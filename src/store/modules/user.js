@@ -2,8 +2,10 @@ import * as types from '../mutation-types'
 import router from '@/router/'
 import * as api from '@/api/user'
 import { Message } from 'element-ui'
+import { getDateTime } from '@/util'
 
 const state = {
+  token: '',
   defaultLoginForm: {
     phone: '',
     password: ''
@@ -13,7 +15,10 @@ const state = {
     password: '',
     nickname: ''
   },
-  token: ''
+  userStatus: {
+    message: '',
+    expireTime: +new Date()
+  }
 }
 
 const getters = {}
@@ -21,6 +26,9 @@ const getters = {}
 const mutations = {
   [types.SET_TOKEN] (state, payload) {
     state.token = payload
+  },
+  [types.SET_USER_STATUS] (state, payload) {
+    state.userStatus = payload
   }
 }
 
@@ -77,6 +85,17 @@ const actions = {
     } catch (err) {
       console.log(err)
     }
+  },
+  async getUserStatus ({commit}, payload) {
+    try {
+      const res = await api.getUserStatus()
+      commit(types.SET_USER_STATUS, {
+        message: res.data.message,
+        expireTime: getDateTime(res.data.expireTime)
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
@@ -84,5 +103,6 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
+  namespaced: true
 }

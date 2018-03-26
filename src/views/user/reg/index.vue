@@ -46,15 +46,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['defaultRegForm']),
-    ...mapActions(['submitRegForm'])
+    ...mapState('user', ['defaultRegForm']),
+    ...mapActions('user', ['submitRegForm'])
   },
   methods: {
     // 提交注册表单
     async submit () {
       this.$refs.regForm.validate(async valid => {
         if (valid) {
-          this.$store.dispatch('submitRegForm', this.regForm)
+          this.$store.dispatch('user/submitRegForm', this.regForm)
         }
       })
     },

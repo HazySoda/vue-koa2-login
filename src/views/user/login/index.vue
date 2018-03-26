@@ -42,15 +42,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['defaultLoginForm']),
-    ...mapActions(['submitLoginForm'])
+    ...mapState('user', ['defaultLoginForm']),
+    ...mapActions('user', ['submitLoginForm'])
   },
   methods: {
     // 提交登录表单
     submit () {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          this.$store.dispatch('submitLoginForm', this.loginForm)
+          this.$store.dispatch('user/submitLoginForm', this.loginForm)
         }
       })
     },
