@@ -28,6 +28,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
+      loginForm: null,
       loginFormRules: {
         phone: [
           {required: true, message: '请输入手机号码'},
@@ -60,7 +61,7 @@ export default {
   },
   created () {
     // 每次创建实例时清空表单
-    this.loginForm = {...this.defaultLoginForm}
+    this.loginForm = Object.assign({}, this.defaultLoginForm)
   }
 }
 </script>
