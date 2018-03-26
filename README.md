@@ -23,7 +23,7 @@
 
 1. [Node.js](https://nodejs.org/en/)：推荐最新LTS版本，至少要在v7.6以上 (7.6默认支持`Async/Await`)。
 2. [MySQL](https://www.mysql.com/cn/)：我使用的是最新版本，5.x应该都可以。
-3. [Yarn (可选)](https://yarnpkg.com/zh-Hans/)：个人喜好，推荐使用`Yarn`，下面的例子也会使用`Yarn`。
+3. [Yarn (可选)](https://yarnpkg.com/zh-Hans/)：我个人强力安利`Yarn`，下面的例子也会使用，如果您不想使用`Yarn`，使用`NPM`即可。
 
 ## 运行项目
 
@@ -83,8 +83,6 @@ $ yarn serve
 前端项目地址：[http://127.0.0.1:8080](http://127.0.0.1:8080)
 
 后端项目地址：[http://127.0.0.1:3000](http://127.0.0.1:3000)
-
-在浏览器中访问即可。
 
 ## Issues & Pull Requests
 
