@@ -3,6 +3,9 @@
     <div class="login-form__wrap">
       <h1>登录</h1>
       <el-form size="medium" :model="loginForm" ref="loginForm" :rules="loginFormRules" label-width="65px">
+        <!-- 以下两个 input 用于迷惑 Chrome 浏览器，使自动填充失效 -->
+        <input style="display:none" type="text" name="fuckChromeAutoFill"/>
+        <input style="display:none" type="password" name="fuckChromeAutoFill"/>
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="loginForm.phone" type="text" autofocus clearable auto-complete="off"></el-input>
         </el-form-item>
@@ -20,15 +23,11 @@
 
 <script>
 import { regexs } from '@/util'
-import * as api from '@/api/user'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      loginForm: {
-        phone: '',
-        password: ''
-      },
       loginFormRules: {
         phone: [
           {required: true, message: '请输入手机号码'},
@@ -41,35 +40,16 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState(['defaultLoginForm']),
+    ...mapActions(['submitLoginForm'])
+  },
   methods: {
     // 提交登录表单
     submit () {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          const data = {...this.loginForm}
-          try {
-            const res = await api.login(data)
-            if (res.data.code !== 0) {
-              this.$message({
-                type: 'error',
-                message: res.data.message,
-                duration: 1000
-              })
-              return
-            }
-            localStorage.token = res.data.token
-            window.setTimeout(() => {
-              // 此处使用 replace，防止用户登陆成功后点击后退按钮重复登录
-              this.$router.replace('/')
-            }, 1000)
-            this.$message({
-              type: 'success',
-              message: '登录成功！',
-              duration: 1000
-            })
-          } catch (err) {
-            console.log(err)
-          }
+          this.$store.dispatch('submitLoginForm', this.loginForm)
         }
       })
     },
@@ -77,6 +57,10 @@ export default {
     goReg () {
       this.$router.push('/user/reg')
     }
+  },
+  created () {
+    // 每次创建实例时清空表单
+    this.loginForm = {...this.defaultLoginForm}
   }
 }
 </script>
