@@ -23,16 +23,12 @@
 
 <script>
 import { regexs } from '@/util'
-import * as api from '@/api/user'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      regForm: {
-        phone: '',
-        password: '',
-        nickname: ''
-      },
+      regForm: null,
       regFormRules: {
         phone: [
           {required: true, message: '请输入手机号码'},
@@ -49,37 +45,16 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState(['defaultRegForm']),
+    ...mapActions(['submitRegForm'])
+  },
   methods: {
     // 提交注册表单
     async submit () {
       this.$refs.regForm.validate(async valid => {
         if (valid) {
-          const data = {
-            ...this.regForm
-          }
-          try {
-            const res = await api.reg(data)
-            if (res.data.code !== 0) {
-              this.$message({
-                type: 'error',
-                message: res.data.message,
-                duration: 1000
-              })
-              return
-            }
-            // 注册成功后存储 token 并跳转到验证页
-            localStorage.token = res.data.token
-            window.setTimeout(() => {
-              this.$router.replace('/')
-            }, 1000)
-            this.$message({
-              type: 'success',
-              message: '注册成功！',
-              duration: 1000
-            })
-          } catch (err) {
-            console.log(err)
-          }
+          this.$store.dispatch('submitRegForm', this.regForm)
         }
       })
     },
@@ -87,6 +62,10 @@ export default {
     goLogin () {
       this.$router.push('/user/login')
     }
+  },
+  created () {
+    // 每次创建实例时清空表单
+    this.regForm = Object.assign({}, this.defaultRegForm)
   }
 }
 </script>
